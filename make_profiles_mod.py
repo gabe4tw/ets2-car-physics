@@ -70,6 +70,35 @@ def make_icon(dst: Path) -> None:
     im.save(dst, quality=92)
 
 
+def make_preview(dst: Path) -> None:
+    """512x512 Steam Workshop preview image (kept outside the mod folder so it isn't uploaded as content)."""
+    try:
+        from PIL import Image, ImageDraw, ImageFont
+    except ImportError:
+        print("Pillow not installed - no preview image")
+        return
+    W = 512
+    im = Image.new("RGB", (W, W), (28, 32, 40))
+    d = ImageDraw.Draw(im)
+    d.rectangle((0, 330, W, 333), fill=(90, 96, 110))
+    d.rectangle((0, 381, W, 384), fill=(90, 96, 110))
+    for i in range(0, W, 40):
+        d.rectangle((i, 353, i + 22, 360), fill=(235, 190, 60))
+    try:
+        big = ImageFont.truetype("arialbd.ttf", 64)
+        mid = ImageFont.truetype("arialbd.ttf", 26)
+        small = ImageFont.truetype("arial.ttf", 22)
+    except OSError:
+        big = mid = small = ImageFont.load_default()
+    d.text((36, 60), "ETS2 CAR", font=big, fill=(245, 245, 245))
+    d.text((36, 135), "PHYSICS", font=big, fill=(235, 190, 60))
+    d.text((38, 230), "Realistic handling profiles", font=mid, fill=(220, 224, 232))
+    d.text((38, 264), "for car mods", font=mid, fill=(220, 224, 232))
+    d.text((38, 420), "sedan  ·  suv  ·  pickup  ·  sports", font=small, fill=(180, 186, 198))
+    d.text((38, 455), "resource for mod authors", font=small, fill=(140, 146, 158))
+    im.save(dst, quality=90)
+
+
 def build(out: Path) -> Path:
     if out.exists():
         shutil.rmtree(out)
@@ -116,6 +145,7 @@ def build(out: Path) -> Path:
     write(out / "versions.sii",
           "SiiNunit\n{\npackage_version_info : .universal\n{\n\tpackage_name: \"universal\"\n}\n}\n")
     make_icon(u / "mod_icon.jpg")
+    make_preview(out.parent / f"{out.name}_preview.jpg")
     scs = out.with_suffix(".scs")
     zip_dir(u, scs)
     return scs
