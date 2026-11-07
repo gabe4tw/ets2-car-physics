@@ -1,6 +1,6 @@
 ### DISCLAIMER: Claude has been used to help with porting over everything to ETS2. Code written by Claude has been triple-checked and debugged. If you still encounter bugs, open an Issue.
 
-# ets2 car physics
+# ETS2 Car Physics
 
 Tools for driving cars in **Euro Truck Simulator 2** the way they drive in ATS:
 
