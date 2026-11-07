@@ -1,0 +1,13 @@
+# suv profile, 2-axle car: SUVs and 4x4s (modelled on a modern off-roader) - part of the "ETS2 Car Physics" mod (1.0.0)
+# Include INSIDE an accessory_chassis_data unit. Remove these attributes from your own
+# chassis first, otherwise they are defined twice:
+#   suspension_class, max_steering_angle, sway_bar_stiffness, cog_height, air_resistance, axle_suspension_type, suspension_damping_factor
+	suspension_class: standard
+	max_steering_angle: 30
+	sway_bar_stiffness: 0.4
+	cog_height: 0.72
+	air_resistance: 0.55
+	axle_suspension_type[]: wishbone
+	axle_suspension_type[]: wishbone
+	suspension_damping_factor[]: 0.8
+	suspension_damping_factor[]: 0.6

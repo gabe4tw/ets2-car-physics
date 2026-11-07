@@ -1,0 +1,18 @@
+ETS2 Car Physics - realistic car handling profiles for ETS2 car mods.
+
+This is a resource for car mod authors. On its own it changes nothing: car mods
+that support it include one of its profiles in their chassis, and list this mod
+as a required item.
+
+Profiles (suspension, steering lock, sway bar, centre of gravity, drag):
+  sedan   hatchbacks, saloons, estates, MPVs (modelled on a full-size sedan)
+  suv     SUVs and 4x4s (modelled on a modern off-roader)
+  pickup  pickups and vans (modelled on a full-size pickup)
+  sports  sports and muscle cars (modelled on a classic muscle car)
+Plus tire.sui for car tire grip.
+
+Usage inside accessory_chassis_data:
+  @include "/def/vehicle/ets2_car_physics/sedan.sui"
+Use <profile>_core.sui if your chassis is not a 2-axle car or you set your own suspension.
+
+Source, docs and a patcher for existing car mods: https://github.com/gabe4tw/ets2-car-physics

@@ -1,0 +1,9 @@
+# pickup profile without per-axle settings - part of the "ETS2 Car Physics" mod (1.0.0)
+# Include INSIDE an accessory_chassis_data unit. Remove these attributes from your own
+# chassis first, otherwise they are defined twice:
+#   suspension_class, max_steering_angle, sway_bar_stiffness, cog_height, air_resistance
+	suspension_class: standard
+	max_steering_angle: 35
+	sway_bar_stiffness: 0.4
+	cog_height: 0.738
+	air_resistance: 0.596

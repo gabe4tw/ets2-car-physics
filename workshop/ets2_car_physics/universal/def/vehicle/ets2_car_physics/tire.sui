@@ -1,0 +1,4 @@
+# car tire grip - part of the "ETS2 Car Physics" mod (1.0.0)
+# Include INSIDE an accessory_wheel_data unit (your f_tire / r_tire defs).
+# Remove grip_factor from your own tire def first.
+	grip_factor: 1.2

@@ -7,6 +7,7 @@ Tools for driving cars in **Euro Truck Simulator 2** the way they drive in ATS:
 - **[`rt2ets2.py`](#usage)** ports an ATS **Road Trip** car DLC you own to ETS2, optionally with car speed limits.
 - **[`rt2ets2.py --handling-only`](#ats-style-handling-for-other-car-mods)** gives any ETS2 car mod you have installed ATS-style car handling. Needs only ETS2.
 - **[`axle_kit.py`](#for-car-mod-authors)** helps car mod authors add a solid rear axle using their own models.
+- **[ETS2 Car Physics](#ets2-car-physics-workshop-mod)** is a standalone mod of handling profiles that car mod authors can build on. It needs no ATS and is safe to put on the Steam Workshop.
 
 ## rt2ets2
 
@@ -120,7 +121,7 @@ Buses, coaches, fire trucks, forklifts, tractors, lowcab trucks and similar vehi
 
 ### For car mod authors
 
-**Using the profiles in your own mod:** copy the numbers from `HANDLING_PROFILES` in [`rt2ets2.py`](rt2ets2.py) into your chassis, or run the patcher on your own mod and copy the result. These are plain chassis settings that ETS2 already supports; nothing extra is required. For the most authentic result, use **real** weight, torque and RPM values like the ATS cars do. ETS2 handles real values fine, and the ported Fords prove it, so the old "multiply everything for truck physics" trick isn't needed with these chassis settings.
+**Using the profiles in your own mod:** include them from the [ETS2 Car Physics](#ets2-car-physics-workshop-mod) mod, or copy the numbers from `HANDLING_PROFILES` in [`rt2ets2.py`](rt2ets2.py) into your chassis. These are plain chassis settings that ETS2 already supports; nothing extra is required. For the most authentic result, use **real** weight, torque and RPM values like the ATS cars do. ETS2 handles real values fine, and the ported Fords prove it, so the old "multiply everything for truck physics" trick isn't needed with these chassis settings.
 
 **Adding a solid rear axle with `axle_kit.py`:** this makes your car's rear axle a live beam, like the ATS Road Trip cars, using **your own** axle model:
 
@@ -132,6 +133,42 @@ It sets `axle_suspension_type` (wishbone front, solidaxle rear) and `solid_axle_
 
 - **Old-style 4×4s:** use `--front solidaxle`.
 - **`--physics-only` (experimental):** sets a solid axle without any model. It isn't confirmed whether ETS2 accepts that, so test in-game and restore the `.bak` if needed.
+
+## ETS2 Car Physics (Workshop mod)
+
+A standalone mod containing the four handling profiles as include files. It's made entirely of this project's own files: no SCS, ATS or third-party content, and no ATS needed. That makes it safe to publish on the Steam Workshop. On its own it changes nothing. Car mods opt in by including a profile:
+
+```
+accessory_chassis_data : rwd.brand.model.chassis
+{
+	name: "Rear-Wheel Drive"
+	model: "/vehicle/truck/brand_model/chassis.pmd"
+	kerb_weight[]: 780
+	kerb_weight[]: 720
+	powered_axle[]: false
+	powered_axle[]: true
+	...
+	@include "/def/vehicle/ets2_car_physics/sedan.sui"
+}
+```
+
+| File | Use |
+|---|---|
+| `sedan.sui`, `suv.sui`, `pickup.sui`, `sports.sui` | Full profile for 2-axle cars: suspension class, steering lock, sway bar, centre of gravity, drag, plus independent suspension and damping on each axle. |
+| `<profile>_core.sui` | Everything except the per-axle settings. Use it if your vehicle doesn't have 2 axles, or you set your own suspension (for example with `axle_kit.py`). |
+| `tire.sui` | Car tire grip. Include it inside your `accessory_wheel_data` tire defs. |
+
+**Before including a profile, remove the same attributes from your chassis.** Otherwise they're defined twice, and arrays like `suspension_damping_factor[]` would end up with 4 entries. Each file lists its attributes at the top.
+
+**Dependency:** a car mod that includes a profile **requires** this mod, so list it as a required item on your Workshop page; the chassis fails to load without it. If you'd rather not depend on it, copy the numbers into your own files.
+
+**Building it:**
+
+```bash
+python make_profiles_mod.py
+```
+
+This writes `workshop/ets2_car_physics/` in the Steam Workshop layout (`versions.sii` plus a `universal/` folder), ready for SCS's *Workshop Uploader*. It also writes `workshop/ets2_car_physics.scs` for local testing. The profile numbers come from `HANDLING_PROFILES` in `rt2ets2.py`, so the Workshop mod and the local patcher always match.
 
 ## Compatibility with other car mods
 

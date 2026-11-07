@@ -1,0 +1,13 @@
+# sedan profile, 2-axle car: hatchbacks, saloons, estates, MPVs (modelled on a full-size sedan) - part of the "ETS2 Car Physics" mod (1.0.0)
+# Include INSIDE an accessory_chassis_data unit. Remove these attributes from your own
+# chassis first, otherwise they are defined twice:
+#   suspension_class, max_steering_angle, sway_bar_stiffness, cog_height, air_resistance, axle_suspension_type, suspension_damping_factor
+	suspension_class: standard
+	max_steering_angle: 28
+	sway_bar_stiffness: 0.35
+	cog_height: 0.56
+	air_resistance: 0.37
+	axle_suspension_type[]: wishbone
+	axle_suspension_type[]: wishbone
+	suspension_damping_factor[]: 0.7
+	suspension_damping_factor[]: 0.5

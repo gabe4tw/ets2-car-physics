@@ -1,0 +1,12 @@
+SiiNunit
+{
+mod_package : .package_name
+{
+	package_version: "1.0.0"
+	display_name: "ETS2 Car Physics"
+	author: "gabe4tw"
+	category[]: "physics"
+	icon: "mod_icon.jpg"
+	description_file: "mod_description.txt"
+}
+}
