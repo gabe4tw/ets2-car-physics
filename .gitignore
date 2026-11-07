@@ -1,0 +1,12 @@
+# Never commit game content or build output
+*.scs
+*.dds
+*.tobj
+*.pmd
+*.pmg
+*.bank
+work/
+output/
+tools/
+__pycache__/
+*.pyc
